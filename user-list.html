@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        fetch("http://127.0.0.1:8000/users").then((data)=> data.json()).then((finaldata)=>{
+            const ulList = document.getElementById("UL")
+            for (let i = 0; i < finaldata.length; i++) {
+                ulList.innerHTML += "<li>" + finaldata[i].name + "</li>"     
+            }
+        })
+    </script>
+    <title>User List</title>
+</head>
+<body>
+    <h3>User List</h3>
+    <ul id="UL">
+
+    </ul>
+</body>
+</html>
