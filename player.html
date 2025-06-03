@@ -1,47 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script>
+        function SendData() {
+            const name = document.getElementById("name").value
+            const age = document.getElementById("age").value
+            const nationality = document.getElementById("nationality").value
+            const skill = document.getElementById("skill").value
+            const runs = document.getElementById("runs").value
+            const wickets = document.getElementById("wickets").value
+            const strikeRate = document.getElementById("strikeRate").value
+            const password = document.getElementById("password").value
+
+            fetch("http://127.0.0.1:8000/players", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    age: age,
+                    nationality: nationality,
+                    skill: skill,
+                    runs: runs,
+                    wickets: wickets,
+                    strikeRate: strikeRate,
+                    password: password
+                })
+            }).
+                then((res) => res.json()).
+                then((data) => {
+                    const re = JSON.stringify(data.error);
+                    document.getElementById("result").innerHTML = re;
+                })
+        }
+    </script>
     <title>Document</title>
 </head>
+
 <body>
-    <form action="http://127.0.0.1:8000/players" method="POST">
-        <div class = "formInput">
-        <label for = "name">Name</label>
-        <input type = "text" placeholder ="Enter player name" name = "name"/>
+    <div class="whole">
+        <div class="formContainerPlayer login_form">
+            <h2>Create Player</h2>
+
+            <div class="player_input_grid">
+                <div class="input_box">
+                    <input id="name" type="text" placeholder="Player Name" name="name" required />
+                </div>
+                <div class="input_box">
+                    <input id="age" type="number" placeholder="Player Age" name="age" required />
+                </div>
+                <div class="input_box">
+                    <input id="nationality" type="text" placeholder="Nationality" name="nationality" required />
+                </div>
+                <div class="input_box">
+                    <input id="skill" type="text" placeholder="Primary Skill" name="skill" required />
+                </div>
+                <div class="input_box">
+                    <input id="runs" type="number" placeholder="Runs Scored" name="runs" required />
+                </div>
+                <div class="input_box">
+                    <input id="wickets" type="number" placeholder="Wickets" name="wickets" required />
+                </div>
+                <div class="input_box">
+                    <input id="strikeRate" type="number" placeholder="Strike Rate" name="strikeRate" required />
+                </div>
+                <div class="input_box">
+                    <input id="password" type="password" placeholder="Password" name="password" required />
+                </div>
+
+                <button class="submit_btn" onclick="SendData()">Create Player</button>
+            </div>
         </div>
-        <div class = "formInput">
-        <label for = "nationality">Nationality</label>
-        <input type = "text" placeholder ="Enter player nationality" name = "nationality"/>
-        </div>
-        <div class = "formInput">
-        <label for = "skill">Primary Skill</label>
-        <input type = "text" placeholder ="Enter player's primary skill" name = "skill"/>
-        </div>
-        <div class = "formInput">
-        <label for = "skill">Primary Skill</label>
-        <input type = "text" placeholder ="Enter player's primary skill" name = "skill"/>
-        </div>
-        <div class = "formInput">
-        <label for = "age">Player Age</label>
-        <input type = "number" placeholder ="Enter player's age" name = "age"/>
-        </div>
-        <div class = "formInput">
-        <label for = "runs">Runs Scored</label>
-        <input type = "number" placeholder ="Enter runs scored by player" name = "runs"/>
-        </div>
-        <div class = "formInput">
-        <label for = "wickets">Wickets</label>
-        <input type = "number" placeholder ="Enter wickets taken by player" name = "wickets"/>
-        </div>
-        <div class = "formInput">
-        <label for = "strike">Strike Rate</label>
-        <input type = "number" placeholder ="Enter player strike rate" name = "strike"/>
-        </div>
-        <input type = "Submit" value ="Create User" />
-    </form>
+        <p class="message" id="result"> </p>
+    </div>
 </body>
+
 </html>
